@@ -1,9 +1,14 @@
+import Routes from './routes/routes'
+import { ListUsersProvider } from './context/listUsersContext'
+
+import GlobalStyles from './styles/global'
 
 function App() {
   return (
-    <div className="App">
-      PharmaInc
-    </div>
+    <ListUsersProvider>
+      <Routes/>
+      <GlobalStyles/>
+    </ListUsersProvider>
   );
 }
 
