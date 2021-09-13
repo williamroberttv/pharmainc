@@ -5,9 +5,7 @@
 </h3>
 
 <p align="center">
-  <a href="https://rocketseat.com.br">
     <span>Challenge by Coodesh</span>
-  </a>
   </p>
 
 # Índice
@@ -51,7 +49,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 1. Faça um clone :
 
 ```sh
-  $ git clone https://github.com/williamroberttv/ecoleta.git
+  $ git clone https://github.com/williamroberttv/pharmainc.git
 ```
 
 2. Executando a Aplicação:
