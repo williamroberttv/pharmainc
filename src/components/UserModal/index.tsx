@@ -19,6 +19,11 @@ const UserModal = () => {
 
   const user = usersData.filter( item => item.login.username === params.id)
 
+  function copyLink(link: string) {
+    navigator.clipboard.writeText(`http://localhost:3000/${link}`)
+    alert('Copiado com sucesso!')
+  }
+
   useEffect(() =>{
     params.id && handleModal(true)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,9 +47,9 @@ const UserModal = () => {
               <p>Telefone: {item.phone}</p>
               <p>Local: {`${item.location.city}, ${item.location.country}.`}</p>
               <button 
-              onClick={() => navigator.clipboard
-              .writeText(`http://localhost:3000/${item.login.username}`)}>
-                <AiOutlineLink size={18}/> Compartilhar
+              onClick={() => copyLink(item.login.username)}>
+                <AiOutlineLink size={18}/> 
+                Compartilhar
               </button>
             </div>
           </div>
