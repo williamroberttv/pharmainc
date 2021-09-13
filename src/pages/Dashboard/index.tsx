@@ -17,7 +17,8 @@ import formatDate from '../../services/formatDate'
 import { Container, ButtonContainer,
   InputSection, StyledHeadTableCell,
   StyledBodyTableCell, FilterContainer, 
-  ButtonGenderFemale, ButtonGenderMale,} from './styles'
+  ButtonGenderFemale, ButtonGenderMale,
+  NationalityContainer} from './styles'
 
 
 const Dashboard = () => {
@@ -30,10 +31,13 @@ const Dashboard = () => {
 
   const [usersPerPage, setUsersPerPage] = useState(10)
 
-// get current posts and
-    const indexOfLastUser = usersPerPage
-    const indexOfFirstUser = indexOfLastUser - usersPerPage
-    const paginateUsers = usersList.slice(indexOfFirstUser, indexOfLastUser)
+  // get current posts and
+  const indexOfLastUser = usersPerPage
+  const indexOfFirstUser = indexOfLastUser - usersPerPage
+  const paginateUsers = usersList.slice(indexOfFirstUser, indexOfLastUser)
+
+  const nationalities = ["AU", "BR", "CA", "CH", "DE", "DK", "ES",
+   "FI", "FR", "GB", "IE", "IR", "NO", "NL", "NZ", "TR", "US"]
 
   
   async function getData(){
@@ -53,15 +57,22 @@ const Dashboard = () => {
 
   function handleDelete(id: string){
     const newList = usersList.filter(item => item.login.username !== id)
-    console.log(id)
     setUsersList(newList)
   }
 
   function handleFilteredUsers(event: ChangeEvent<HTMLInputElement>){
     const filter = event.currentTarget.value
     setInputValue(filter.toLowerCase())
-    console.log(inputValue)
     setFilteredList(usersList.filter( list => list.name.first.toLowerCase().includes(inputValue)))
+  }
+
+  function filterByNationality(event: ChangeEvent<HTMLSelectElement>){
+    const nationalityFilter = event.currentTarget.value
+    if(!nationalityFilter){
+      setUsersList(usersData)
+    } else {
+      setUsersList(usersData.filter( item => item.nat.toUpperCase() === nationalityFilter))
+    }
   }
 
   useEffect(() => {
@@ -86,6 +97,13 @@ const Dashboard = () => {
         onClick={() => filterUsersByGender('female') }>
           Feminino
         </ButtonGenderFemale>
+        <NationalityContainer>
+          <p>Nacionalidade: </p>
+          <select onChange={(event) => filterByNationality (event)}>
+            <option></option>
+            {nationalities.map((item, index) => <option key={index} value={item}>{item}</option>)}
+        </select>
+        </NationalityContainer>
       </FilterContainer>
      <TableContainer component={Paper} style={{width:'60%', margin: 'auto'}}>
         <Table>

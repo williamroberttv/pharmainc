@@ -34,8 +34,8 @@ const UserModal = () => {
     <Modal open={openModal} onClose={() => handleModal(false)}>
       <Container>
         
-          {user.map( item => 
-          <div>
+          {user.map( (item, index) => 
+          <div key={index}>
             <img src={item.picture.large} alt="imagem de " />
             <div>
               <h2>{`${item.name.first} ${item.name.last}`}</h2>

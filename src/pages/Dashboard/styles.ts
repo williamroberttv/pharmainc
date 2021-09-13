@@ -85,7 +85,21 @@ export const ButtonGenderFemale = styled.button<ButtonProps>`
     `
     }
 ` 
-
+export const NationalityContainer = styled.div`
+  display: flex;
+  align-items:center;
+  margin-bottom: 16px;
+  margin-left: 22px;
+  p {
+    margin-right: 16px;
+  }
+  select {
+    border: none;
+    width: 64px;
+    height: 30px;
+    border-radius: 10px;
+  }
+` 
 export const StyledHeadTableCell = styled(TableCell)`
   background-color: black;
   border: 1px solid #ffff;
