@@ -1,6 +1,9 @@
-import styled from 'styled-components'
-import {TableCell} from '@material-ui/core'
+import styled, { css } from 'styled-components'
+import { TableCell } from '@material-ui/core'
 
+interface ButtonProps {
+  gender: string;
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -8,7 +11,6 @@ export const Container = styled.div`
 ` 
 export const ButtonContainer = styled.div`
   display: flex;
-  /* margin-bottom: 600px; */
   height: 100px;
   align-items: center;
   justify-content: center;
@@ -48,6 +50,41 @@ export const InputSection = styled.div`
     background-color:transparent;
   }
 `
+export const FilterContainer = styled.div`
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+`
+export const ButtonGenderMale = styled.button<ButtonProps>`
+    background-color: #ffff;
+    border: none;
+    border-radius: 10px;
+
+    margin-right: 16px;
+    margin-bottom: 16px;
+    width: 120px;
+    height: 30px;
+    ${props => props.gender === 'male' && css`
+    background-color: black;
+    color: #fff;
+    `
+    }
+` 
+export const ButtonGenderFemale = styled.button<ButtonProps>`
+    background-color: #ffff;
+    border: none;
+    border-radius: 10px;
+
+    margin-bottom: 16px;
+    width: 120px;
+    height: 30px;
+    ${props => props.gender === 'female' && css`
+    background-color: black;
+    color: #fff;
+    `
+    }
+` 
 
 export const StyledHeadTableCell = styled(TableCell)`
   background-color: black;

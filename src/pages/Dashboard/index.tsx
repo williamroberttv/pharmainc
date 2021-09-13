@@ -15,15 +15,18 @@ import api from '../../services/api'
 import formatDate from '../../services/formatDate'
 
 import { Container, ButtonContainer,
-   InputSection, StyledHeadTableCell, StyledBodyTableCell } from './styles'
+  InputSection, StyledHeadTableCell,
+  StyledBodyTableCell, FilterContainer, 
+  ButtonGenderFemale, ButtonGenderMale,} from './styles'
 
 
 const Dashboard = () => {
-  const { getUsersData, handleModal } = useListUsersContext()
+  const { getUsersData, handleModal, usersData } = useListUsersContext()
   
   const [usersList, setUsersList] = useState<UsersDataProps[]>([])
   const [filteredList, setFilteredList] = useState<UsersDataProps[]>([])
   const [inputValue, setInputValue] = useState<string>('')
+  const [gender, setGender] = useState<string>('')
 
   const [usersPerPage, setUsersPerPage] = useState(10)
 
@@ -39,6 +42,15 @@ const Dashboard = () => {
     getUsersData(data.results)
   }
   
+  function filterUsersByGender(param: string){
+    if (param === gender) { 
+      setUsersList(usersData)
+      setGender('')
+    } else { setGender(param)
+      setUsersList(usersData.filter( item => item.gender === param))
+    }
+  }
+
   function handleDelete(id: string){
     const newList = usersList.filter(item => item.login.username !== id)
     console.log(id)
@@ -61,9 +73,20 @@ const Dashboard = () => {
     <Container>
       <Header/>
       <InputSection>
-        <input onChange={e => handleFilteredUsers(e)} type="text" placeholder="Procurar usuário"/>
+        <input onChange={e => handleFilteredUsers(e)} 
+        type="text" placeholder="Procurar usuário"/>
         <Search/>
       </InputSection>
+      <FilterContainer >
+        <ButtonGenderMale gender={gender} 
+        onClick={() => filterUsersByGender('male') }>
+          Masculino
+        </ButtonGenderMale>
+        <ButtonGenderFemale  gender={gender}
+        onClick={() => filterUsersByGender('female') }>
+          Feminino
+        </ButtonGenderFemale>
+      </FilterContainer>
      <TableContainer component={Paper} style={{width:'60%', margin: 'auto'}}>
         <Table>
           <TableHead>
@@ -83,7 +106,8 @@ const Dashboard = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(inputValue.length <  2 ? paginateUsers : filteredList).map((user, index) => (
+            {(inputValue.length <  2 ? paginateUsers : filteredList)
+            .map((user, index) => (
               <TableRow key={index}>
                 <StyledBodyTableCell component="th" scope="row">
                   <p>{`${user.name.first} ${user.name.last}`}</p>
@@ -98,7 +122,9 @@ const Dashboard = () => {
                 </StyledBodyTableCell>
                 <StyledBodyTableCell>
                   <div>
-                    <button onClick={() => handleDelete(user.login.username)}><Delete/></button>
+                    <button onClick={() => handleDelete(user.login.username)}>
+                      <Delete/>
+                    </button>
                     <Link to={`/${user.login.username}`}>
                       <button onClick={() => handleModal(true)}>
                         <AccountCircle/>
